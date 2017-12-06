@@ -14,6 +14,7 @@ $listofnum = array();
 $i=0;
 $numcomp = 35;
 $sonystart = 30;
+$emptyarray = array();
 
 $item_won = array(1,2,3,4,5,6,7,8,9,10);
 
@@ -39,9 +40,9 @@ foreach ($listoftmpnum as $item) {
         array_push($listofnum, array($item,$class));
 
     }
-
 }
 
 echo json_encode($listofnum);
+//echo json_encode($emptyarray);
 
 

@@ -28,88 +28,83 @@
     <?php } ?>
 </div>
 <script>
-function test() {
-    $(document).ready(function(){
-        $.getJSON('calculation.php', function(data) {
-            console.log(data);
-            console.log(data.length);
-            $.each(data, function(key, val) {
-                var idnum = key +1;
-                $('#'+idnum).text(val[0]);
-                if (val[1] == 1) {
-                    $('#'+idnum).addClass('lucky_won');
-                } else {
-                    $('#'+idnum).addClass('lucky_not');
-                }
-            });
-        });
-    });
-}
 
-
-
-</script>
-
-<script language=javascript>
     var numOfCalls = 1;
     var int;
     var realtime = new Date();
     var redirecttime = new Date();
 
+    function test() {
+        $(document).ready(function () {
+            $.getJSON('calculation.php', function (data) {
+                if ($.trim(data)) {
+                    $.each(data, function (key, val) {
+                        var idnum = key + 1;
+                        $('#' + idnum).text(val[0]);
+                        if (val[1] == 1) {
+                            $('#' + idnum).addClass('lucky_won');
+                        } else {
+                            $('#' + idnum).addClass('lucky_not');
+                        }
+                    });
+                    if (numOfCalls > 5) {
+//                        clearTimeout(checktime);
+                        console.log(1);
+                        window.clearInterval(int);
+                    } else {
+                        console.log(2-77);
+                        int = self.setInterval("display()", 3000);
+                    }
+                } else {
+                    console.log(data);
+                    window.setTimeout(test, 1000);
+                }
+            });
+        });
+    }
+
     function checktime() {
         var time = new Date();
-        realtime.setHours(0,32, 0, 0);
+        realtime.setHours(0, 0, 0, 0);
         if (time.getHours() > 12) {
-            realtime.setHours(16);
+            realtime.setHours(22);
         } else {
             realtime.setHours(12);
         }
-
-
         if (time > realtime) {
             test();
-
-            if (numOfCalls > 5) {
-                console.log(numOfCalls);
-                clearTimeout(checktime);
-                window.clearInterval(int);
-            } else {
-                int = self.setInterval("display()", 3000);
-            }
-
         } else {
             window.setTimeout(checktime, 1000);
         }
     }
 
-    checktime();
-
-
     function display() {
-        console.log(numOfCalls);
+//        console.log(numOfCalls);
         document.getElementById(numOfCalls).style.display = "block";
         numOfCalls++;
-
         if (numOfCalls > 5) {
+            console.log(3-51);
             window.clearInterval(int);
             var val = realtime.getHours();
-            redirecttime.setHours(val, 35);
+            redirecttime.setHours(val, 5);
             redirect();
         }
-        console.log(numOfCalls);
+//        console.log(numOfCalls);
     }
 
 
-    function redirect(){
+    function redirect() {
         var time = new Date();
-
-        if(time > redirecttime){
-            window.location ="http://www.google.com";
-        }else {
+        if (time > redirecttime) {
+            window.location = "http://www.google.com";
+        } else {
             window.setTimeout(redirect, 1000);
             console.log(redirecttime, time);
         }
     }
+
+
+    checktime();
 
 </script>
 </body>
