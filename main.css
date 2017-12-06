@@ -86,3 +86,11 @@ body {
     top:240px;
     left:0px;
 }
+
+.lucky_won {
+    color: green;
+}
+
+.lucky_not {
+    color: red;
+}

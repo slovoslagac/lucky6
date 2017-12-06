@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?php
 
-//include_once('calculation.php');
+include_once('calculation.php');
 ?>
 <html>
 <head>
@@ -14,70 +14,49 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 <div id="screen">
-    <?php for ($i = 1; $i < 6; $i++) { ?>
-        <div class="number<?php echo $i ?>">
+    <?php for ($i = 0; $i < 5; $i++) { ?>
+        <div class="number<?php echo $i + 1 ?>">
             <div class="numbers">
-                <div class="number" id="<?php echo $i ?>" style="display:none;"></div>
+                <div class="number" id="<?php echo $i + 1 ?>" style="display:none;"><?php echo $listofnum[$i] ?></div>
                 <div class="hours">3 sata</div>
             </div>
         </div>
     <?php } ?>
 </div>
-<script>
-function test() {
-    $(document).ready(function(){
-        $.getJSON('calculation.php', function(data) {
-            console.log(data);
-            console.log(data.length);
-            $.each(data, function(key, val) {
-                var idnum = key +1;
-                $('#'+idnum).text(val[0]);
-                if (val[1] == 1) {
-                    $('#'+idnum).addClass('lucky_won');
-                } else {
-                    $('#'+idnum).addClass('lucky_not');
-                }
-            });
-        });
-    });
-}
-
-
-
-</script>
+</body>
 
 <script language=javascript>
     var numOfCalls = 1;
     var int;
-    var realtime = new Date();
+    var realtime;
     var redirecttime = new Date();
 
     function checktime() {
         var time = new Date();
-        realtime.setHours(0,32, 0, 0);
         if (time.getHours() > 12) {
-            realtime.setHours(16);
+            realtime = new Date();
+            realtime.setHours(15, 0, 0, 0);
         } else {
-            realtime.setHours(12);
+            realtime = new Date();
+            realtime.setHours(12, 0, 0, 0);
         }
 
 
         if (time > realtime) {
-            test();
+
 
             if (numOfCalls > 5) {
                 console.log(numOfCalls);
                 clearTimeout(checktime);
                 window.clearInterval(int);
             } else {
-                int = self.setInterval("display()", 3000);
+                 int = self.setInterval("display()", 3000);
             }
 
-        } else {
+    } else {
             window.setTimeout(checktime, 1000);
         }
     }
@@ -85,7 +64,11 @@ function test() {
     checktime();
 
 
+//    var numOfCalls = 1;
+//    var int = self.setInterval("display()", 3000);
+
     function display() {
+        var t = numOfCalls;
         console.log(numOfCalls);
         document.getElementById(numOfCalls).style.display = "block";
         numOfCalls++;
@@ -93,7 +76,7 @@ function test() {
         if (numOfCalls > 5) {
             window.clearInterval(int);
             var val = realtime.getHours();
-            redirecttime.setHours(val, 35);
+            redirecttime.setHours(val, 5);
             redirect();
         }
         console.log(numOfCalls);
@@ -112,6 +95,3 @@ function test() {
     }
 
 </script>
-</body>
-
-</html>

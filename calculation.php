@@ -15,6 +15,8 @@ $i=0;
 $numcomp = 35;
 $sonystart = 30;
 
+$item_won = array(1,2,3,4,5,6,7,8,9,10);
+
 $listofnames = array(31=>"S1", 32=>"S2", 33=>"S3", 34=>"S4", 35=>"S5");
 
 while($i<5 ) {
@@ -29,14 +31,17 @@ while($i<5 ) {
 
 foreach ($listoftmpnum as $item) {
     if($item > $sonystart) {
-        array_push($listofnum, $listofnames[$item]);
+        (in_array($item, $item_won))?  $class = 1 : $class = 2;
+        array_push($listofnum, array($listofnames[$item],$class));
 
     } else {
-        array_push($listofnum, $item);
+         (in_array($item, $item_won))?  $class = 1 : $class = 2;
+        array_push($listofnum, array($item,$class));
 
     }
 
 }
 
+echo json_encode($listofnum);
 
 
